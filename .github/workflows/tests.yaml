@@ -48,6 +48,9 @@ jobs:
           fi
           pip list
 
+      - name: Install test dependencies
+        run: pip install -r requirements_tests.txt
+
       - name: Run tests & coverage
         run: |
           coverage run -m pytest tests/
