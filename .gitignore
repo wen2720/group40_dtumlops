@@ -1,7 +1,13 @@
 docs/site/
 
+#data
+data/
+#profiler
+profiler/
 # test cache
 manual_test/
+#model
+models/
 
 # other local dev info
 .vscode/
@@ -181,4 +187,4 @@ cython_debug/
 /models/
 
 # Windows Zone Identifier files
-Zone.Identifier
+*:Zone.Identifier
