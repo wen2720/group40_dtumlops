@@ -10,13 +10,27 @@ import wandb
 import typer
 import pickle
 
+# Initialize logger
 logger.add("train.log", level="DEBUG", rotation="100 MB")
 
+# Function to save the model using pickle
 def save_model_pickle(model, path):
+    ''' Save the model using pickle.'''
     with open(path, 'wb') as f:
         pickle.dump(model, f)
 
+# Main training function
 def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
+    ''' 
+    Train a ConvNeXt model on the leaf dataset.
+    
+            Parameters: epochs (int): The number of epochs to train the model.
+                batch_size (int): The number of samples per batch.
+                lr (float): The learning rate for the optimizer.
+
+            Returns: None
+    '''
+    # Initialize Weights and Biases (wandb) run
     run = wandb.init(
         project="group40_leaf",
         config={"learning_rate": lr, "batch_size": batch_size, "epochs": epochs},
@@ -24,6 +38,7 @@ def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
     logger.info("Starting the training process")
     logger.info(f"Configuration: epochs={epochs}, batch_size={batch_size}, lr={lr}")
 
+    # Set device to GPU if available, else CPU
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
     image_dir = "data/images"
@@ -33,12 +48,12 @@ def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
     dataloader = get_dataloaders(image_dir, csv_path, batch_size)
     logger.info("Dataloader initialized")
 
-    # Determine the number of classes
+    # Determine the number of classes from the CSV file
     data = pd.read_csv(csv_path)
     num_classes = data['species'].nunique()
     logger.info(f"Number of classes: {num_classes}")
 
-    # Initialize model, loss, and optimizer
+    # Initialize model, loss function, and optimizer
     model = convnext(num_classes=num_classes).to(device)
     logger.info(f"Model initialized with {sum(p.numel() for p in model.parameters()):,} parameters")
     criterion = nn.CrossEntropyLoss()
@@ -74,8 +89,10 @@ def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
                 correct += (preds == labels).sum().item()
                 total += labels.size(0)
                 
-                prof.step()  # Mark step for profiler
+                # Mark step for profiler
+                prof.step()  
 
+            # Calculate and log training loss and accuracy
             train_loss = running_loss / len(dataloader)
             train_accuracy = correct / total
 
@@ -100,11 +117,8 @@ def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
     artifact.add_file("models/leaf_model.pkl")
     run.log_artifact(artifact)
 
-#    wandb.save("leaf_model.pth")
-
-#    # Export profiling trace
-#    prof.export_chrome_trace("trace.json")
 
 if __name__ == "__main__":
+    # Add logger for the main script
     logger.add("training.log", level="INFO", rotation="10 MB")
     typer.run(train_model)
