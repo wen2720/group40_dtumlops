@@ -1,0 +1,16 @@
+program: src/group40_leaf/train.py
+name: sweepdemo
+project: group40_leaf
+entity: s183587-danmarks-tekniske-universitet-dtu
+method: bayes  # Add the method section (options: grid, random, bayes)
+metric:
+    goal: minimize
+    name: validation_loss
+parameters:
+    lr:
+        values: [0.001]
+    batch-size:
+        values: [16, 32]
+    epochs:
+        values: [5, 10]
+run_cap: 10

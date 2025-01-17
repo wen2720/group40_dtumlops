@@ -1,0 +1,16 @@
+[run]
+source = src
+omit =
+    src/group40_leaf/evaluate.py
+    src/group40_leaf/test.py
+    src/group40_leaf/train.py
+
+[report]
+omit =
+    */tests/*
+    */venv/*
+    */__init__.py
+
+[html]
+directory = htmlcov
+
