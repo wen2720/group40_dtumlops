@@ -1,65 +1,36 @@
-
-
 import io
 import pickle
-
 import torch
 import torch.nn as nn
-import timm
 from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 from torchvision import transforms
 
-from src.group40_leaf.model import convnext
-
-def convnext(num_classes):
-    # Must match the definition you used when training!
-    model = timm.create_model('convnext_tiny', pretrained=False)
-    # Adjust the stem to accept 1-channel input
-    model.stem[0] = nn.Conv2d(
-        in_channels=1,
-        out_channels=model.stem[0].out_channels,
-        kernel_size=model.stem[0].kernel_size,
-        stride=model.stem[0].stride,
-        padding=model.stem[0].padding,
-        bias=True
-    )
-
-    model.head.fc = nn.Linear(model.head.fc.in_features, num_classes)
-    return model
-
-
-
 app = FastAPI(title="Leaf Classification Inference")
 
+# Load Model from File
+model_path = "models/leaf_model.pkl"
 
+# Load the model
+with open(model_path, "rb") as f:
+    model = pickle.load(f)
 
-model = convnext(num_classes=99)
-
-########################
 # Move model to device
-########################
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 model.eval()
 
-########################
 # Define input transforms
-########################
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
 ])
 
-
-########################
 # Prediction Endpoint
-########################
 
 @app.get("/")
 async def read_root():
     return {"message": "Welcome to the Leaf model inference API!"}
-
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -69,7 +40,7 @@ async def predict(file: UploadFile = File(...)):
     # Convert bytes to a PIL Image
     img = Image.open(io.BytesIO(image_bytes))
 
-    #  ensure image is 'L' (8-bit grayscale).
+    # Ensure image is 'L' (8-bit grayscale)
     if img.mode != "L":
         img = img.convert("L")
 
