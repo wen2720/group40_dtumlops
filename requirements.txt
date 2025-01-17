@@ -12,3 +12,4 @@ typer==0.15.1
 fastapi==0.115.6
 wandb==0.19.3
 uvicorn==0.34.0
+httpx==0.20.0
