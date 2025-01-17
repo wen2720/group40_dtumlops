@@ -10,7 +10,7 @@ from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 from torchvision import transforms
 
-from model import convnext
+from src.group40_leaf.model import convnext
 
 def convnext(num_classes):
     # Must match the definition you used when training!
@@ -55,6 +55,12 @@ transform = transforms.Compose([
 ########################
 # Prediction Endpoint
 ########################
+
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the Leaf model inference API!"}
+
+
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     """Endpoint that takes in an image and returns the predicted class index."""
