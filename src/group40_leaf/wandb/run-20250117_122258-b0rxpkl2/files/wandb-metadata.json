@@ -1,0 +1,42 @@
+{
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "CPython 3.12.4",
+  "startedAt": "2025-01-17T11:22:59.011187Z",
+  "program": "E:\\Git Explorer\\group40_dtumlops\\src\\group40_leaf\\train.py",
+  "codePath": "src\\group40_leaf\\train.py",
+  "git": {
+    "remote": "https://github.com/wen2720/group40_dtumlops.git",
+    "commit": "a02e04f1b8e1b29eac4e059a66f5f43111c06bc4"
+  },
+  "email": "wuqiusuoliver@gmail.com",
+  "root": "E:\\Git Explorer\\group40_dtumlops\\src\\group40_leaf",
+  "host": "LAPTOP-1Q3FNBHV",
+  "executable": "C:\\Users\\wuqiu\\anaconda3\\envs\\mlop\\python.exe",
+  "codePathLocal": "train.py",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1099511623680",
+      "used": "39888371712"
+    }
+  },
+  "memory": {
+    "total": "8461725696"
+  },
+  "cpu": {
+    "count": 4,
+    "countLogical": 8
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 2060",
+      "memoryTotal": "6442450944",
+      "cudaCores": 1920,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "12.7"
+}

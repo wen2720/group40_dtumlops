@@ -1,5 +1,9 @@
 docs/site/
 
+#data
+data/
+#profiler
+profiler/
 # test cache
 manual_test/
 
