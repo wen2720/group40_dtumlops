@@ -6,6 +6,8 @@ data/
 profiler/
 # test cache
 manual_test/
+#model
+models/
 
 # other local dev info
 .vscode/
