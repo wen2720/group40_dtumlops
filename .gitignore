@@ -183,7 +183,7 @@ cython_debug/
 #.idea/
 
 # Folders
-#/data/
+/data/
 /models/
 
 # Windows Zone Identifier files
