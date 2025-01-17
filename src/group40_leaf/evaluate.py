@@ -8,14 +8,15 @@ import typer
 logger.add("evaluate.log", level="DEBUG", rotation="100 MB")
 
 def evaluate_model(batch_size:int=32, model_path:str="model.pth"):
+
+    image_dir = "data/images"
+    csv_path = "data/train.csv"
+
     logger.info("Starting evaluation")
     logger.info(f"Evaluating model from: {model_path}")
     logger.info(f"Dataset: {csv_path}, Batch size: {batch_size}")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
-    
-    image_dir = "data/images"
-    csv_path = "data/train.csv"
 
     # Load data
     dataloader = get_dataloaders(image_dir, csv_path, batch_size, num_images=None)
