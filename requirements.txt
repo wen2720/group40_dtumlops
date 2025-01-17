@@ -11,3 +11,5 @@ typer==0.15.1
 pandas
 scikit-learn
 dvc
+fastapi==0.115.6
+uvicorn==0.34.0
