@@ -3,10 +3,18 @@ name: "Run tests"
 on:
   push:
     branches:
-      - main
+      - main 
+      - lise
+      - justine 
+      - ruikangzhao
+      - devWen
   pull_request:
     branches:
-      - main
+      - main 
+      - lise
+      - justine 
+      - ruikangzhao
+      - devWen
 
 jobs:
   test:
@@ -30,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-            |
+#           |
 #            python -m pip install -U pip setuptools wheel
 #            if [ $RUNNER_OS == 'Linux' ] || [ $RUNNER_OS == 'Windows' ]; then
 #              pip install -r requirements.txt
