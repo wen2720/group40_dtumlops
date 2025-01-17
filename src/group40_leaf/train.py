@@ -102,9 +102,6 @@ def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
             print(f"Epoch [{epoch+1}/{epochs}], Loss: {train_loss}")
             logger.info(f"Epoch {epoch+1}/{epochs}, Average Loss: {train_loss:.4f}")
 
-        prof.export_chrome_trace("profiler/trace.json")
-    
-
     # Save the trained model
     with open("models/leaf_model.pkl", "wb") as f:
         pickle.dump(model, f)
@@ -116,8 +113,7 @@ def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
     )
     artifact.add_file("models/leaf_model.pkl")
     run.log_artifact(artifact)
-
-
+    
 if __name__ == "__main__":
     # Add logger for the main script
     logger.add("training.log", level="INFO", rotation="10 MB")
