@@ -7,6 +7,7 @@ MLOps
 The directory structure of the project looks like this:
 
 ```txt
+group40_dtumlops
 ├── .dvc/
 │   ├── .gitignore            # DVC
 │   └── config
