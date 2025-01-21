@@ -592,4 +592,7 @@ In our project we worked with branches and pull requests. All team members had a
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
---- question 31 fill here ---
+The total contribution tracked by the report is not representing our contributions to the project, because we needed to set up a new repository and therefore our previous commits-log got lost.
+In some cases people worked as a team on solutions and therefore not all contributions to the project can be represented in the distribution for the most commits.
+In general we worked sometimes together on a problem and sometimes splitted some tasks, but the each group member contributed equally to the project.
+
