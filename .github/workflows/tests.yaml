@@ -8,6 +8,7 @@ on:
       - justine 
       - ruikangzhao
       - devWen
+      - test # test branch, besides the steps of job also runs other job
   pull_request:
     branches:
       - main 
@@ -18,6 +19,7 @@ on:
 
 jobs:
   test:
+     if: github.ref != 'refs/heads/test'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -51,3 +53,30 @@ jobs:
         run: |
           coverage run -m pytest tests/ --ignore=tests/integrationtests/
           coverage report -m
+
+    test-on-push-test-branch:
+      if: github.ref == 'refs/heads/test'
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Authenticate with GCP
+          uses: google-github-actions/auth@v1
+          with:
+            credentials_json: ${{ secrets.GS_BUCKET }}
+
+        - name: Configure Docker for GCP
+          run: gcloud auth configure-docker
+
+        - name: Build Docker Image
+          run: |
+            export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
+            docker build -t $IMAGE_NAME .
+
+        - name: Push Docker Image to GCP
+          run: |
+            export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
+            docker push $IMAGE_NAME
+  Key Details 
