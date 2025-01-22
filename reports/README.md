@@ -82,19 +82,19 @@ will check the repositories and the code to verify your answers.
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
-* [ ] Create a trigger workflow for automatically building your docker images (M21)
-* [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
+* [X] Create a trigger workflow for automatically building your docker images (M21)
+* [X] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [X] Create a FastAPI application that can do inference using your model (M22)
-* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
-* [ ] Write API tests for your application and setup continues integration for these (M24)
-* [ ] Load test your application (M24)
+* [X] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [X] Write API tests for your application and setup continues integration for these (M24)
+* [X] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
 * [ ] Create a frontend for your API (M26)
 
 ### Week 3
 
-* [ ] Check how robust your model is towards data drifting (M27)
-* [ ] Deploy to the cloud a drift detection API (M27)
+* [X] Check how robust your model is towards data drifting (M27)
+* [X] Deploy to the cloud a drift detection API (M27)
 * [ ] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
 * [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
@@ -228,7 +228,11 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
---- question 7 fill here ---
+We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
+Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
+Test model: Tests 
+Integrationtests to test API: Test if the API is responding
+Performancetest with loctusfile: 
 
 ### Question 8
 
@@ -243,7 +247,8 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
---- question 8 fill here ---
+The code coverage of the data and model code is 100% for both.
+We would not trust our code to be error free, because the test is only covering some scenarios/cases and not all of the possible happenings. It is also testing functions that we implemented and during training there could be some error occurences that we do not expect.
 
 ### Question 9
 
@@ -259,6 +264,7 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 > Answer:
 
 In our project we worked with branches and pull requests. All team members had a separate branch to push code on first and save their changes. After implementing code that everyone should use, we made a pull request (PR). With that PR the code got merged to the main branch.
+Version control can be improved by that because if something goes wrong it is easier to go back to a specific point where everything worked. Maybe the version of the code from two days ago was more efficient and better working than the one recently deployed.
 
 ### Question 10
 
@@ -273,7 +279,8 @@ In our project we worked with branches and pull requests. All team members had a
 >
 > Answer:
 
---- question 10 fill here ---
+We used DVC for storing and versioning our data. Because we used a dataset that contained pre-processed data we only had to upload the data once.
+In general data versioning is good practice when defining an own pre-process step and the data gets overwritten. It is the same case as using versions for your code. It is easy to go back to previous pushed data if the new data got corrupted for example.
 
 ### Question 11
 
@@ -412,7 +419,9 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
-Done!
+```markdown
+![my_image](figures/bucket.png)
+```
 
 ### Question 20
 
@@ -421,7 +430,9 @@ Done!
 >
 > Answer:
 
-Done!
+```markdown
+![my_image](figures/registry.png)
+```
 
 ### Question 21
 
@@ -560,7 +571,11 @@ So far we have used 6.67$. The service costing the most was Compute Engine.
 >
 > Answer:
 
---- question 29 fill here ---
+```markdown
+![my_image](figures/overview.png)
+```
+Our diagram starts in the data soruce point. The data is versionized via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versionized with Git Hub. It is also used for some experiments for logging some important metrcis with weights & biases. We also monitor our model by looking at the Data Drift.
+When new code gets pushed to the main branch in the Git some actions are starting and also a Trigger is being activated that builds two Docker Images.
 
 ### Question 30
 
@@ -598,5 +613,5 @@ On top of that, working as a large group on different parts of the project wasnâ
 
 The total contribution tracked by the report is not representing our contributions to the project, because we needed to set up a new repository and therefore our previous commits-log got lost.
 In some cases people worked as a team on solutions and therefore not all contributions to the project can be represented in the distribution for the most commits.
-In general we worked sometimes together on a problem and sometimes splitted some tasks, but the each group member contributed equally to the project.
-
+In general we worked sometimes together on a problem and sometimes splitted tasks, but each group member contributed equally to the project.
+We used ChatGPT and GitHub CoPilot for writing some code, helping debugging and explaining some questions.
