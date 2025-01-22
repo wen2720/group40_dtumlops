@@ -106,10 +106,10 @@ will check the repositories and the code to verify your answers.
 
 * [ ] Write some documentation for your application (M32)
 * [ ] Publish the documentation to GitHub Pages (M32)
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Create an architectural diagram over your MLOps pipeline
+* [X] Make sure all group members have an understanding about all parts of the project
+* [X] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 >
 > Answer:
 
-For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we didn't have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
+For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
 
 ### Question 6
 
@@ -290,7 +290,7 @@ In our project we worked with branches and pull requests. All team members had a
 >
 > Answer:
 
---- question 11 fill here ---
+This GitHub Actions workflow is set up to run tests, linting, and coverage checks on multiple operating systems and Python versions. It also makes use of caching to speed up the process.
 
 ## Running code and tracking experiments
 
@@ -412,7 +412,7 @@ In our project we worked with branches and pull requests. All team members had a
 >
 > Answer:
 
---- question 19 fill here ---
+Done!
 
 ### Question 20
 
@@ -421,7 +421,7 @@ In our project we worked with branches and pull requests. All team members had a
 >
 > Answer:
 
---- question 20 fill here ---
+Done!
 
 ### Question 21
 
@@ -527,7 +527,7 @@ In our project we worked with branches and pull requests. All team members had a
 >
 > Answer:
 
---- question 27 fill here ---
+So far we have used 6.67$. The service costing the most was Compute Engine. 
 
 ### Question 28
 
@@ -574,7 +574,11 @@ In our project we worked with branches and pull requests. All team members had a
 >
 > Answer:
 
---- question 30 fill here ---
+Throughout the project, we ran into a few challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort.
+
+We also had some struggles with Git. With five people collaborating, we ran into issues with git pull and push commands, which often led to merge conflicts. Resolving those took a fair bit of coordination and troubleshooting.
+
+On top of that, working as a large group on different parts of the project wasn’t always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
 
 ### Question 31
 
