@@ -79,3 +79,5 @@ jobs:
         run: |
           export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
           docker push $IMAGE_NAME
+
+
