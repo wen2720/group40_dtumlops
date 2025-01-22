@@ -78,9 +78,9 @@ will check the repositories and the code to verify your answers.
 * [X] Get some continuous integration running on the GitHub repository (M17)
 * [X] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
 * [X] Add a linting step to your continuous integration (M17)
-* [-] Add pre-commit hooks to your version control setup (M18)
-* [-] Add a continues workflow that triggers when data changes (M19)
-* [-] Add a continues workflow that triggers when changes to the model registry is made (M19)
+* [ ] Add pre-commit hooks to your version control setup (M18)
+* [ ] Add a continues workflow that triggers when data changes (M19)
+* [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
 * [ ] Create a trigger workflow for automatically building your docker images (M21)
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
@@ -88,8 +88,8 @@ will check the repositories and the code to verify your answers.
 * [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [ ] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
-* [-] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
-* [-] Create a frontend for your API (M26)
+* [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
+* [ ] Create a frontend for your API (M26)
 
 ### Week 3
 
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 >
 > Answer:
 
---- question 5 fill here ---
+For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we didn't have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
 
 ### Question 6
 
@@ -209,7 +209,7 @@ pip install -r requirements.txt
 >
 > Answer:
 
---- question 6 fill here ---
+We used flake8 for linting. We check for four error codes within our workflow (syntax, import, undefined names and unused variables errors). We used normal commenting operators # and """ within our code to clarify specific section and provide an overview. In large projects it is important to agree on rules about coding and documentation to be able to understand parts written by different people and find relevant information faster. For example, I want to know the return variables from a function that a colleague wrote, if I know the structure of documentation, I can easily find the information I am looking for.
 
 ## Version control
 
@@ -592,4 +592,7 @@ In our project we worked with branches and pull requests. All team members had a
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
---- question 31 fill here ---
+The total contribution tracked by the report is not representing our contributions to the project, because we needed to set up a new repository and therefore our previous commits-log got lost.
+In some cases people worked as a team on solutions and therefore not all contributions to the project can be represented in the distribution for the most commits.
+In general we worked sometimes together on a problem and sometimes splitted some tasks, but the each group member contributed equally to the project.
+

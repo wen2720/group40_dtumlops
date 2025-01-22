@@ -7,46 +7,95 @@ MLOps
 The directory structure of the project looks like this:
 
 ```txt
+group40_dtumlops
+├── .dvc/
+│   ├── .gitignore            # DVC
+│   └── config
 ├── .github/                  # Github actions and dependabot
 │   ├── dependabot.yaml
 │   └── workflows/
 │       └── tests.yaml
+├── .idea/                    # Idea
+│   ├── .gitignore
+│   ├── misc.xml
+│   ├── mlops.iml
+│   ├── modules.xml
+│   ├── vcs.xml
+│   └── inspectionProfiles/
+│       └── profiles_settings.xml
 ├── configs/                  # Configuration files
+│   ├── .gitkeep
+│   └── sweep.yaml
 ├── data/                     # Data directory
+│   ├── images/
+│   |   ├── 1.jpg
+│   |   ├── ...
+│   |   └── 1584.jpg
 │   ├── processed
-│   └── raw
+│   ├── raw
+│   ├── test.csv
+│   └── train.csv
 ├── dockerfiles/              # Dockerfiles
 │   ├── api.Dockerfile
 │   └── train.Dockerfile
 ├── docs/                     # Documentation
 │   ├── mkdocs.yml
+│   ├── README.md
 │   └── source/
 │       └── index.md
 ├── models/                   # Trained models
+│   └── .gitkeep
 ├── notebooks/                # Jupyter notebooks
+│   └── .gitkeep
 ├── reports/                  # Reports
+│   ├── .gitkeep
+│   ├── README.md
+│   ├── report.py
 │   └── figures/
+│       ├── .gitkeep
+│       ├── artifacts_100.png
+│       ├── bucket.png
+│       ├── build.png
+│       ├── overview.png
+│       ├── profiler_tensorboard.png
+│       ├── registry.png
+│       ├── sweep_100.png
+│       ├── w&b_100.png
+│       └── wandb.png
 ├── src/                      # Source code
-│   ├── project_name/
+│   ├── group40_leaf/
 │   │   ├── __init__.py
 │   │   ├── api.py
 │   │   ├── data.py
 │   │   ├── evaluate.py
 │   │   ├── models.py
+│   │   ├── test.py
 │   │   ├── train.py
 │   │   └── visualize.py
-└── tests/                    # Tests
+│   └── __init__.py
+├── tests/                    # Tests
 │   ├── __init__.py
-│   ├── test_api.py
 │   ├── test_data.py
-│   └── test_model.py
+│   ├── test_model.py
+│   └── integrationstests/
+│       └── test_api.py
+├── wandb/                    # weight & biases
+│   ├── latest-run/
+│   ├── run-... /
+│   └── sweep-... /
+├── .coveragerc
+├── .dvcignore
 ├── .gitignore
 ├── .pre-commit-config.yaml
+├── cloudbild.yaml
+├── data.dvc
+├── Dockerfile
 ├── LICENSE
 ├── pyproject.toml            # Python project file
 ├── README.md                 # Project README
-├── requirements.txt          # Project requirements
 ├── requirements_dev.txt      # Development requirements
+├── requirements_tets.txt     # Test requirements
+├── requirements.txt          # Project requirements
 └── tasks.py                  # Project tasks
 ```
 
@@ -70,18 +119,28 @@ CNN architecture with powerful learning ability is considered the model we mainl
 
 
 ### 1. Local run of the training.py file.
-$python src/group40_leaf/train.pY
+```
+$python src/group40_leaf/train.py
+```
 
 ### 2. Build docker image locally by train.dockerfile 
+```
 $docker build -f dockerfiles/train.dockerfile . -t leaf-mlops:latest
+```
 
 ### 3. Run docker container locally by the following command 
 
 3.1 Linux:
+```
 $docker run --rm -it -v $(pwd)/models:/models/ -v $(pwd)/data:/data/ leaf-mlops:latest data/
+```
 
 3.2 MacOS:
+```
 $docker run --rm -it -v ${PWD}/models:/models/ -v $(pwd)/data:/data/ leaf-mlops:latest
+```
 
 3.3 Windows:
+```
 $docker run --rm -it -v %cd%/models:/models/ -v %cd%/data:/data/ leaf-mlops:latest
+```
