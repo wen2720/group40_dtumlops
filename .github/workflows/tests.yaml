@@ -65,7 +65,7 @@ jobs:
       - name: Authenticate with GCP
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GS_BUCKET }}
+          credentials_json: ${{ secrets.GS_DOCKER }}
 
       - name: Configure Docker for GCP
         run: gcloud auth configure-docker europe-west1-docker.pkg.dev
@@ -79,5 +79,3 @@ jobs:
         run: |
           export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
           docker push $IMAGE_NAME
-
-          
