@@ -11,8 +11,7 @@ def test_convnext_output_shape():
     num_classes = 99
     model = convnext(num_classes=num_classes)
 
-    # Create a random input of shape (1, 1, 224, 224)
-    # batch_size=1, channels=1, height=224, width=224
+    # Create random input with shape (1, 1, 224, 224)
     x = torch.randn(1, 1, 224, 224)
 
     # Forward pass
