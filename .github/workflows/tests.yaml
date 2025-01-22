@@ -3,23 +3,14 @@ name: "Run tests"
 on:
   push:
     branches:
-      - main 
-      - lise
-      - justine 
-      - ruikangzhao
-      - devWen
-      - test # test branch, besides the steps of job also runs other job
+      - '*'
   pull_request:
     branches:
-      - main 
-      - lise
-      - justine 
-      - ruikangzhao
-      - devWen
+      - '*'
 
 jobs:
   test:
-    if: github.ref != 'refs/heads/test'
+    if: github.ref != 'refs/heads/main'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -54,8 +45,8 @@ jobs:
           coverage run -m pytest tests/ --ignore=tests/integrationtests/
           coverage report -m
 
-  test-on-push-test-branch:
-    if: github.ref == 'refs/heads/test'
+  push-main-branch:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
