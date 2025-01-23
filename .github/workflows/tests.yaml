@@ -45,6 +45,15 @@ jobs:
           coverage run -m pytest tests/ --ignore=tests/integrationtests/
           coverage report -m
 
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GS_DOCKER }}
+
+      - name: DVC data
+        run: |
+          dvc pull 
+
   push-main-branch:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
