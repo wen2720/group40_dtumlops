@@ -4,13 +4,13 @@ import os
 import pytest
 import torch
 import pandas as pd
-from src.group40_leaf.data import LeafDataset, get_dataloaders  # Adjust according to the actual path
+from src.group40_leaf.data import LeafDataset, get_dataloaders
 
-TRAIN_CSV_PATH = "leaf-classification/train.csv"
-TEST_CSV_PATH = "leaf-classification/test.csv"
-IMAGE_DIR = "leaf-classification/images_full"
+TRAIN_CSV_PATH = "data/train.csv"
+TEST_CSV_PATH = "data/test.csv"
+IMAGE_DIR = "data/images"
 
-# Expected number of samples (only for training set)
+# Expected number of samples
 EXPECTED_N_TRAIN = 990
 
 @pytest.mark.skipif(
@@ -80,7 +80,6 @@ def test_dataloader_shapes(batch_size):
         batch_size=batch_size
     )
     for images, labels in dataloader:
-        # If the current batch is exactly less than batch_size, images.shape[0] will also decrease
         assert (
             images.shape == (batch_size, 1, 224, 224)
             or images.shape[0] < batch_size
@@ -92,5 +91,4 @@ def test_dataloader_shapes(batch_size):
             f"Label batch size {labels.shape[0]} does not match "
             f"image batch size {images.shape[0]}"
         )
-        # Only test the first batch
         break
