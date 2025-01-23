@@ -52,8 +52,6 @@ jobs:
 
       - name: DVC data
         run: |
-          dvc init
-          dvc remote add -d origin dvc remote add -d origin gs://leaf-group40/
           dvc pull 
 
   push-main-branch:
