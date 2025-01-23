@@ -309,7 +309,7 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 12 fill here ---
+We did not make use of config files. Bla bla... 
 
 ### Question 13
 
@@ -324,7 +324,7 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 13 fill here ---
+We used W&B to make sure no information was lost and our experiments were reproducible. Every time we ran an experiment, W&B automatically logged all the important details like hyperparameters (batch size, learning rate, etc.), metrics, and results. This made it super easy to reproduce experiments because everything was already saved in one place. If we wanted to rerun something, we could just check W&B for the exact settings and hyperparameters we used. Plus, the visualizations in W&B helped us track how training and validation losses changed over time, so we could compare different runs and figure out which ones worked best. Even though we did noy use config files, W&B was a really handy tool for keeping our experiments organized and making sure everything was consistent and easy to replicate.
 
 ### Question 14
 
@@ -341,7 +341,21 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 14 fill here ---
+```markdown
+![my_image](figures/wandb.png)
+```
+We tracked a few key metrics during our experiments:
+1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
+2. Train Accuracy: This measures how well the model performs on the training data. It helps us understand if the model is learning the patterns in the dataset.
+3. Epoch: Tracking the number of epochs is useful to ensure we are consistently comparing runs and evaluating progress over time.
+4. Train Loss: This tracks how far off the model’s predictions are during training. A steady decrease in loss indicates that the model is learning and improving.
+
+That said, we did not focus too much on optimizing the model itself. Our main goal was to have a functional model that we could work with. This is reflected in the figures, where the results are not perfect but were sufficient for our purposes.
+
+```markdown
+![my_image](figures/sweep_100.png)
+```
+We used W&B’s built-in hyperparameter sweeping functionality to optimize our model. By creating a sweep.yaml file and running the commands wandb sweep and wandb agent, we tested different hyperparameter combinations. The results were logged in the W&B dashboard, where we could analyze which hyperparameters worked best and which had the most significant impact. However, we did not focus too much on perfecting the model.
 
 ### Question 15
 
