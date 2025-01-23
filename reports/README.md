@@ -410,7 +410,11 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 >
 > Answer:
 
---- question 17 fill here ---
+On the Google Cloud Platform, we used Cloud Storage Bucket, Artifact Registry, Compute Engine and Cloud Run services and needed to set up some service accounts and other permissions inside the Identity and Access Management (IAM) page.
+The Bucket is used as the storage, where we store datasets, models and other necessary files. It allows us to access and manage this data within our project.
+Compute Engine is used for deploying and running applications, executing workflows and performing computational tasks. It provides the necessary flexibility and scalability needed for processing data and running our code efficiently.
+The Artifact Registry is where our repository is placed. It is the center for managing and storing container images and artifacts. This ensures integration between our services and supports the continuous deployment of our applications.
+The Cloud Run is providing a workflow to create a function. One function for example can be to input some data and get the prediction out of the provided model.
 
 ### Question 18
 
