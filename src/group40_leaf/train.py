@@ -20,7 +20,7 @@ def save_model_pickle(model, path):
         pickle.dump(model, f)
 
 # Main training function
-def train_model(epochs:int=10, batch_size:int=32, lr:float=1e-3):
+def train_model(epochs:int=2, batch_size:int=32, lr:float=1e-3):
     ''' 
     Train a ConvNeXt model on the leaf dataset.
     
