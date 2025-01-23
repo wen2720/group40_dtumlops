@@ -1,0 +1,36 @@
+name: "Build and push to GCP"
+
+on:
+  workflow_run:
+    workflows: ["Run tests"] 
+    types:
+      - completed
+
+jobs:
+  push-main-branch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GS_DOCKER }}
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - name: Build Docker Image
+        run: |
+          export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
+          docker build -t $IMAGE_NAME .
+
+      - name: Push Docker Image to GCP
+        run: |
+          export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
+          docker push $IMAGE_NAME
+
+
