@@ -228,11 +228,7 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
-We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
-Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
-Test model: Tests 
-Integrationtests to test API: Test if the API is responding
-Performancetest with loctusfile: 
+We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performancetest where ... is being tested.
 
 ### Question 8
 
@@ -247,8 +243,8 @@ Performancetest with loctusfile:
 >
 > Answer:
 
-The code coverage of the data and model code is 100% for both.
-We would not trust our code to be error free, because the test is only covering some scenarios/cases and not all of the possible happenings. It is also testing functions that we implemented and during training there could be some error occurences that we do not expect.
+The code coverage of the data and model source code is 100% for both.
+Even though the coverage says that we have 100% we would not trust our code to be error free. The coverage looks for how much of the code is being executed during testing. Therefore, the test is only covering some scenarios/cases and not all the possibilities that can happen.
 
 ### Question 9
 
@@ -263,7 +259,7 @@ We would not trust our code to be error free, because the test is only covering 
 >
 > Answer:
 
-In our project we worked with branches and pull requests. All team members had a separate branch to push code on first and save their changes. After implementing code that everyone should use, we made a pull request (PR). With that PR the code got merged to the main branch.
+In our project we worked with branches and pull requests. All team members had a separate branch. To save our changes we could first push the code on our branch. After implementing code that everyone should use, we made a pull request (PR). With that PR the code got merged into the main branch.
 Version control can be improved by that because if something goes wrong it is easier to go back to a specific point where everything worked. Maybe the version of the code from two days ago was more efficient and better working than the one recently deployed.
 
 ### Question 10
@@ -279,8 +275,8 @@ Version control can be improved by that because if something goes wrong it is ea
 >
 > Answer:
 
-We used DVC for storing and versioning our data. Because we used a dataset that contained pre-processed data we only had to upload the data once.
-In general data versioning is good practice when defining an own pre-process step and the data gets overwritten. It is the same case as using versions for your code. It is easy to go back to previous pushed data if the new data got corrupted for example.
+We used DVC for storing and versioning our data. Because we used a dataset that already contained pre-processed data, we only had to upload the data once and had no further versioning.
+In general, it is good practice to keep track of the data versions when defining own implemented pre-process steps and the data gets overwritten every time the steps are being executed. It is the same case as tracking versions for your code in GitHub. It is easy to go back to previous pushed data if the new data got corrupted after changing something in the pre-process steps for example.
 
 ### Question 11
 
@@ -297,7 +293,10 @@ In general data versioning is good practice when defining an own pre-process ste
 >
 > Answer:
 
-This GitHub Actions workflow is set up to run tests, linting, and coverage checks on multiple operating systems and Python versions. It also makes use of caching to speed up the process.
+Our GitHub Actions workflow is set up to run unittests, linting, and coverage checks on multiple operating systems (Linux, MacOS, Windows) and Python versions (3.11, 3.12). It also makes use of caching to speed up the process.
+For running the integration test GitHub would need the model in the Repository. Our model was too big to provide it in the Repo and therefore the integrationtest is only run locally.
+When pushing code to a branch and then creating a pull request to the main the test are triggered and run, as seen here:
+<link>
 
 ## Running code and tracking experiments
 
@@ -316,7 +315,9 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 12 fill here ---
+```
+python report.py check
+```
 
 ### Question 13
 
@@ -378,7 +379,9 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 16 fill here ---
+```markdown
+![my_image](figures/profiling.png)
+```
 
 ## Working in the cloud
 
@@ -554,7 +557,7 @@ So far we have used 6.67$. The service costing the most was Compute Engine.
 >
 > Answer:
 
---- question 28 fill here ---
+We did not implemented anything extra.
 
 ### Question 29
 
@@ -574,8 +577,10 @@ So far we have used 6.67$. The service costing the most was Compute Engine.
 ```markdown
 ![my_image](figures/overview.png)
 ```
-Our diagram starts in the data soruce point. The data is versionized via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versionized with Git Hub. It is also used for some experiments for logging some important metrcis with weights & biases. We also monitor our model by looking at the Data Drift.
-When new code gets pushed to the main branch in the Git some actions are starting and also a Trigger is being activated that builds two Docker Images.
+The general workflow of our MLOPs pipeline is displayed in the overview figure.
+Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement.
+When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds two Docker Images. One for the data and one for the application to run the whole model.
+For using our pipeline it is enough to clone the code from Git, pull the data from DVC and pull the docker images in order to get started locally.
 
 ### Question 30
 
@@ -590,9 +595,7 @@ When new code gets pushed to the main branch in the Git some actions are startin
 > Answer:
 
 Throughout the project, we ran into a few challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort.
-
 We also had some struggles with Git. With five people collaborating, we ran into issues with git pull and push commands, which often led to merge conflicts. Resolving those took a fair bit of coordination and troubleshooting.
-
 On top of that, working as a large group on different parts of the project wasnâ€™t always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
 
 ### Question 31
@@ -611,7 +614,6 @@ On top of that, working as a large group on different parts of the project wasnâ
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
-The total contribution tracked by the report is not representing our contributions to the project, because we needed to set up a new repository and therefore our previous commits-log got lost.
-In some cases people worked as a team on solutions and therefore not all contributions to the project can be represented in the distribution for the most commits.
-In general we worked sometimes together on a problem and sometimes splitted tasks, but each group member contributed equally to the project.
+The total contributions reflected in the overall project report for all groups do not fully represent our involvement in the project. This discrepancy occurred because we had to set up a new repository, resulting in the loss of our previous commit history. Additionally, many solutions were developed in teams, meaning that some tasks were divided whilst other times it was done in teams and therefore not all contributions are accurately captured in the commit distribution.
+However, each group member contributed equally to the overall success of the project.
 We used ChatGPT and GitHub CoPilot for writing some code, helping debugging and explaining some questions.
