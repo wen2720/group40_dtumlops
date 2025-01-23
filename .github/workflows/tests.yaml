@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    if: github.event_name == 'pull_request'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -61,13 +62,6 @@ jobs:
         run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
       - name: Build Docker Image
-        run: |
-          export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
-          docker build -t $IMAGE_NAME .
-
-      - name: Push Docker Image to GCP
-        run: |
-          export IMAGE_NAME=europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest
-          docker push $IMAGE_NAME
+        run: gcloud builds submit --config=cloudbuild.yaml .
 
 
