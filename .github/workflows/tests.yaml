@@ -45,9 +45,12 @@ jobs:
           coverage run -m pytest tests/ --ignore=tests/integrationtests/
           coverage report -m
 
-      - name: DVC data
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GS_BUCKET }}
+          credentials_json: ${{ secrets.GS_DOCKER }}
+
+      - name: DVC data
         run: |
           dvc init
           dvc remote add -d origin dvc remote add -d origin gs://leaf-group40/
