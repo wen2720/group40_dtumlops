@@ -347,20 +347,18 @@ We used W&B to make sure no information was lost and our experiments were reprod
 >
 > Answer:
 
-```markdown
-![my_image](../figures/wandb.png)
-```
+![my_image](figures/wandb.png)
+
 We tracked a few key metrics during our experiments:
-1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
+1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that is too high can cause instability, while one that is too low can make training inefficient.
 2. Train Accuracy: This measures how well the model performs on the training data. It helps us understand if the model is learning the patterns in the dataset.
 3. Epoch: Tracking the number of epochs is useful to ensure we are consistently comparing runs and evaluating progress over time.
 4. Train Loss: This tracks how far off the model’s predictions are during training. A steady decrease in loss indicates that the model is learning and improving.
 
 That said, we did not focus too much on optimizing the model itself. Our main goal was to have a functional model that we could work with. This is reflected in the figures, where the results are not perfect but were sufficient for our purposes.
 
-```markdown
 ![my_image](figures/sweep_100.png)
-```
+
 We used W&B’s built-in hyperparameter sweeping functionality to optimize our model. By creating a sweep.yaml file and running the commands wandb sweep and wandb agent, we tested different hyperparameter combinations. The results were logged in the W&B dashboard, where we could analyze which hyperparameters worked best and which had the most significant impact. However, we did not focus too much on perfecting the model.
 
 ### Question 15
@@ -391,9 +389,7 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 >
 > Answer:
 
-```markdown
 ![my_image](figures/profiling.png)
-```
 
 ## Working in the cloud
 
@@ -438,9 +434,7 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
-```markdown
 ![my_image](figures/bucket.png)
-```
 
 ### Question 20
 
@@ -449,9 +443,7 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
-```markdown
 ![my_image](figures/registry.png)
-```
 
 ### Question 21
 
@@ -590,9 +582,8 @@ We did not implemented anything extra.
 >
 > Answer:
 
-```markdown
 ![my_image](figures/overview.png)
-```
+
 The general workflow of our MLOPs pipeline is displayed in the overview figure.
 Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement.
 When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds two Docker Images. One for the data and one for the application to run the whole model.
@@ -610,9 +601,9 @@ For using our pipeline it is enough to clone the code from Git, pull the data fr
 >
 > Answer:
 
-Throughout the project, we ran into a few challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort.
+Throughout the project, we ran into many challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort, however we made it work.
 We also had some struggles with Git. With five people collaborating, we ran into issues with git pull and push commands, which often led to merge conflicts. Resolving those took a fair bit of coordination and troubleshooting.
-On top of that, working as a large group on different parts of the project wasn’t always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
+On top of that, working as a large group on different parts of the project was not always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
 
 ### Question 31
 
