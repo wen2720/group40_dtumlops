@@ -131,16 +131,10 @@ $docker build -f dockerfiles/train.dockerfile . -t leaf-mlops:latest
 ### 3. Run docker container locally by the following command 
 
 3.1 Linux:
-```
-$docker run --rm -it -v $(pwd)/models:/models/ -v $(pwd)/data:/data/ leaf-mlops:latest data/
-```
+`$docker run --rm -it -v $(pwd)/models:/models/ -v $(pwd)/data:/data/ leaf-mlops:latest`
 
 3.2 MacOS:
-```
-$docker run --rm -it -v ${PWD}/models:/models/ -v $(pwd)/data:/data/ leaf-mlops:latest
-```
+`$docker run --rm -it -v ${PWD}/models:/models/ -v $(pwd)/data:/data/ leaf-mlops:latest`
 
 3.3 Windows:
-```
-$docker run --rm -it -v %cd%/models:/models/ -v %cd%/data:/data/ leaf-mlops:latest
-```
+`$docker run --rm -it -v %cd%/models:/models/ -v %cd%/data:/data/ leaf-mlops:latest`

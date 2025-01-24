@@ -376,7 +376,19 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 >
 > Answer:
 
---- question 15 fill here ---
+One of our docker file can be reviewed through the following link [Dockerfile](https://github.com/wen2720/group40_dtumlops/blob/main/Dockerfile). To train the [convnext_tinny](https://pytorch.org/vision/main/models/generated/torchvision.models.convnext_tiny.html) model we can build the image and run the container as follows from the root directory of the project in a Linux system.
+
+Build:
+```bash
+docker build -t leaf:latest .
+```
+The `-t` option is for tagging the version of the image.
+
+Run:
+```bash
+docker run --rm -it -v $(pwd)/models:/models/ -v $(pwd)/data:/data/ leaf:latest
+```
+The `--rm` stands for removing the container as soon as it exits. The `-v` option stands for volume which enables host machine to mount a shared volume to the container. In this way, the training function can load pre-installed data from the host and the store the parameters of the model to the host.
 
 ### Question 16
 
@@ -429,7 +441,27 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 18 fill here ---
+We utilize the compute engine instance to run the training and evaluation. The instance also stores the leaf dataset and parameters of the trained model. The instance is created with the command as follows:
+
+```bash
+gcloud compute instances create my-instance \
+    --zone=europe-west1-c \
+    --image-family=pytorch-latest-cpu \
+    --image-project=deeplearning-platform-release
+```
+The compute engine is pre-configured and the specification is as follows:
+
+| **Configuration**                | **Value**                           |
+|----------------------------------|-------------------------------------|
+| **Machine Type**                 | n1-standard-1                       |
+| **CPU Platform**                 | Unknown CPU Platform                |
+| **Minimum CPU Platform**         | None                                |
+| **vCPUs to Core Ratio**          | —                                   |
+| **Custom Visible Cores**         | —                                   |
+| **All-Core Turbo-Only Mode**     | —                                   |
+| **Display Device**               | Disabled                            |
+| **GPUs**                         | None                                |
+
 
 ### Question 19
 
@@ -460,7 +492,7 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 21 fill here ---
+![cloudbuild history](figures/cloudbuild_history.png)
 
 ### Question 22
 
@@ -475,7 +507,7 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 22 fill here ---
+We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/torchvision.models.convnext_tiny.html) in the GCP Compute engine instance. We download the dataset from the google storage bucket and sotre the model parameters in the instance. Thanks to the pre-configured instance which already have the enviornment ready e.g., `python`, `venv`, `docker` and etc. We can efficiently pull the docker image, for the training and evaluation.
 
 ## Deployment
 
