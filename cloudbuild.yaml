@@ -1,20 +1,39 @@
+# steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   id: 'Build container image'
+#   args: [
+#     'build',
+#     '.',
+#     '-t',
+#     'europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/train',
+#     '-f',
+#     'dockerfiles/train.dockerfile'
+#   ]
+# - name: 'gcr.io/cloud-builders/docker'
+#   id: 'Push container image'
+#   args: [
+#     'push',
+#     'europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/train'
+#   ]
+# options:
+#   logging: CLOUD_LOGGING_ONLY
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  id: 'Build container image'
-  args: [
-    'build',
-    '-f',
-    '/dockerfiles/train.dockerfile',
-    '-t',
-    '${_IMAGE_NAME}',
-    '.',
-  ]
-- name: 'gcr.io/cloud-builders/docker'
-  id: 'Push container image'
-  args: [
-    'push',
-    '${_IMAGE_NAME}'
-  ]
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    env:
+      - 'DOCKER_BUILDKIT=1'
+    args:
+      - 'build'
+      - '-t'
+      - '${_IMAGE_NAME}'
+      - '.'
+  
+  # Step 2: Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_IMAGE_NAME}'
+
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
