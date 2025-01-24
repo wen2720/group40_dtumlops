@@ -85,7 +85,7 @@ will check the repositories and the code to verify your answers.
 * [X] Create a trigger workflow for automatically building your docker images (M21)
 * [X] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [X] Create a FastAPI application that can do inference using your model (M22)
-* [X] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [X] Write API tests for your application and setup continues integration for these (M24)
 * [X] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
@@ -94,11 +94,11 @@ will check the repositories and the code to verify your answers.
 ### Week 3
 
 * [X] Check how robust your model is towards data drifting (M27)
-* [X] Deploy to the cloud a drift detection API (M27)
+* [ ] Deploy to the cloud a drift detection API (M27)
 * [ ] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
 * [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
-* [ ] If applicable, optimize the performance of your data loading using distributed data loading (M29)
+* [X] If applicable, optimize the performance of your data loading using distributed data loading (M29)
 * [ ] If applicable, optimize the performance of your training pipeline by using distributed training (M30)
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
 
@@ -293,10 +293,13 @@ In general, it is good practice to keep track of the data versions when defining
 >
 > Answer:
 
-Our GitHub Actions workflow is set up to run unittests, linting, and coverage checks on multiple operating systems (Linux, MacOS, Windows) and Python versions (3.11, 3.12). It also makes use of caching to speed up the process.
-For running the integration test GitHub would need the model in the Repository. Our model was too big to provide it in the Repo and therefore the integrationtest is only run locally.
-When pushing code to a branch and then creating a pull request to the main the test are triggered and run, as seen here:
-<link>
+Our GitHub Actions workflow is used to ensure some standards within the project through a CI pipeline. For maintaining the code quality we run unit tests, linting checks and coverage reports.
+To trigger these workflows there can be two events: A push to the main branch or a pull request for the main branch. Therefore, all pushes are tested and validated before being merged into the main branch.
+All tests are implemented for multiple operating systems (Linux, MacOS, Windows). We are also testing two different Python versions (3.11, 3.12). With that we have several tests with all combinations of operating systems and python versions ensuring the compatibility in different environments.
+While performing the test we also make sure to use caching to speed up the pipeline. With this the dependencies are not being downloaded every time.
+For running the integration test within the workflow GitHub would need access to the model in the Repository. However, our model is too large to provide it in the Repo due to size limitations. We therefore run the integrationtest only locally.
+When pushing code to a branch and then creating a pull request to the main the tests are triggered and run, as seen here:
+ https://github.com/wen2720/group40_dtumlops/actions/runs/12945845760
 
 ## Running code and tracking experiments
 
