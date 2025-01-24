@@ -85,7 +85,7 @@ will check the repositories and the code to verify your answers.
 * [X] Create a trigger workflow for automatically building your docker images (M21)
 * [X] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [X] Create a FastAPI application that can do inference using your model (M22)
-* [X] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [X] Write API tests for your application and setup continues integration for these (M24)
 * [X] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
@@ -94,11 +94,11 @@ will check the repositories and the code to verify your answers.
 ### Week 3
 
 * [X] Check how robust your model is towards data drifting (M27)
-* [X] Deploy to the cloud a drift detection API (M27)
+* [ ] Deploy to the cloud a drift detection API (M27)
 * [ ] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
 * [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
-* [ ] If applicable, optimize the performance of your data loading using distributed data loading (M29)
+* [X] If applicable, optimize the performance of your data loading using distributed data loading (M29)
 * [ ] If applicable, optimize the performance of your training pipeline by using distributed training (M30)
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
 
@@ -228,7 +228,14 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
+
+We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
+Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
+Test model: Tests 
+Integrationtests to test API: Test if the API is responding and present right informations.
+Performance test with loctusfile: 
 We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performancetest where ... is being tested.
+
 
 ### Question 8
 
@@ -293,10 +300,13 @@ In general, it is good practice to keep track of the data versions when defining
 >
 > Answer:
 
-Our GitHub Actions workflow is set up to run unittests, linting, and coverage checks on multiple operating systems (Linux, MacOS, Windows) and Python versions (3.11, 3.12). It also makes use of caching to speed up the process.
-For running the integration test GitHub would need the model in the Repository. Our model was too big to provide it in the Repo and therefore the integrationtest is only run locally.
-When pushing code to a branch and then creating a pull request to the main the test are triggered and run, as seen here:
-<link>
+Our GitHub Actions workflow is used to ensure some standards within the project through a CI pipeline. For maintaining the code quality we run unit tests, linting checks and coverage reports.
+To trigger these workflows there can be two events: A push to the main branch or a pull request for the main branch. Therefore, all pushes are tested and validated before being merged into the main branch.
+All tests are implemented for multiple operating systems (Linux, MacOS, Windows). We are also testing two different Python versions (3.11, 3.12). With that we have several tests with all combinations of operating systems and python versions ensuring the compatibility in different environments.
+While performing the test we also make sure to use caching to speed up the pipeline. With this the dependencies are not being downloaded every time.
+For running the integration test within the workflow GitHub would need access to the model in the Repository. However, our model is too large to provide it in the Repo due to size limitations. We therefore run the integrationtest only locally.
+When pushing code to a branch and then creating a pull request to the main the tests are triggered and run, as seen here:
+ https://github.com/wen2720/group40_dtumlops/actions/runs/12945845760
 
 ## Running code and tracking experiments
 
@@ -388,6 +398,12 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
+
+
+[This image](figures/profiler_tensorboard.png)
+
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded.
 
 ![my_image](figures/profiling.png)
 
@@ -565,7 +581,12 @@ So far, we have spent $6.67, with the biggest cost coming from Compute Engine. O
 >
 > Answer:
 
+We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
+
+Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+
 We did not implemented anything extra.
+
 
 ### Question 29
 
