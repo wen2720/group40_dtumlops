@@ -177,7 +177,7 @@ Once the virtual environment is created, it needs to be activated.
 4.	Installing Dependencies:
 With the virtual environment activated, the member installs all the dependencies listed in the requirements.txt file by running the command:
 pip install -r requirements.txt
-5.	Running the Project
+5.	Running the project!
 
 
 ### Question 5
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 >
 > Answer:
 
-For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
+For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases (W&B) experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
 
 ### Question 6
 
@@ -228,11 +228,14 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
+
 We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
 Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
 Test model: Tests 
 Integrationtests to test API: Test if the API is responding and present right informations.
 Performance test with loctusfile: 
+We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performancetest where ... is being tested.
+
 
 ### Question 8
 
@@ -247,8 +250,8 @@ Performance test with loctusfile:
 >
 > Answer:
 
-The code coverage of the data and model code is 100% for both.
-We would not trust our code to be error free, because the test is only covering some scenarios/cases and not all of the possible happenings. It is also testing functions that we implemented and during training there could be some error occurences that we do not expect.
+The code coverage of the data and model source code is 100% for both.
+Even though the coverage says that we have 100% we would not trust our code to be error free. The coverage looks for how much of the code is being executed during testing. Therefore, the test is only covering some scenarios/cases and not all the possibilities that can happen.
 
 ### Question 9
 
@@ -263,7 +266,7 @@ We would not trust our code to be error free, because the test is only covering 
 >
 > Answer:
 
-In our project we worked with branches and pull requests. All team members had a separate branch to push code on first and save their changes. After implementing code that everyone should use, we made a pull request (PR). With that PR the code got merged to the main branch.
+In our project we worked with branches and pull requests. All team members had a separate branch. To save our changes we could first push the code on our branch. After implementing code that everyone should use, we made a pull request (PR). The PR should be reviewed and approved by at least two team members before it is merged into the main branch.
 Version control can be improved by that because if something goes wrong it is easier to go back to a specific point where everything worked. Maybe the version of the code from two days ago was more efficient and better working than the one recently deployed.
 
 ### Question 10
@@ -279,8 +282,8 @@ Version control can be improved by that because if something goes wrong it is ea
 >
 > Answer:
 
-We used DVC for storing and versioning our data. Because we used a dataset that contained pre-processed data we only had to upload the data once.
-In general data versioning is good practice when defining an own pre-process step and the data gets overwritten. It is the same case as using versions for your code. It is easy to go back to previous pushed data if the new data got corrupted for example.
+We used DVC for storing and versioning our data. Because we used a dataset that already contained pre-processed data, we only had to upload the data once and had no further versioning.
+In general, it is good practice to keep track of the data versions when defining own implemented pre-process steps and the data gets overwritten every time the steps are being executed. It is the same case as tracking versions for your code in GitHub. It is easy to go back to previous pushed data if the new data got corrupted after changing something in the pre-process steps for example.
 
 ### Question 11
 
@@ -297,7 +300,10 @@ In general data versioning is good practice when defining an own pre-process ste
 >
 > Answer:
 
-This GitHub Actions workflow is set up to run tests, linting, and coverage checks on multiple operating systems and Python versions. It also makes use of caching to speed up the process.
+Our GitHub Actions workflow is set up to run unittests, linting, and coverage checks on multiple operating systems (Linux, MacOS, Windows) and Python versions (3.11, 3.12). It also makes use of caching to speed up the process.
+For running the integration test GitHub would need the model in the Repository. Our model was too big to provide it in the Repo and therefore the integrationtest is only run locally.
+When pushing code to a branch and then creating a pull request to the main the test are triggered and run, as seen here:
+<link>
 
 ## Running code and tracking experiments
 
@@ -315,8 +321,8 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 > *We used a simple argparser, that worked in the following way: Python  my_script.py --lr 1e-3 --batch_size 25*
 >
 > Answer:
-
---- question 12 fill here ---
+  
+We did not use config files for our experiments. Instead, we defined the necessary parameters directly within the training function by setting default values for things like batch size, learning rate, and number of epochs. We are aware that config files are a great way to organize and manage experiment settings, especially for larger projects. However, in our case, we did not prioritize the time to set them up. 
 
 ### Question 13
 
@@ -331,7 +337,7 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 13 fill here ---
+We used W&B to make sure no information was lost and our experiments were reproducible. Every time we ran an experiment, W&B automatically logged all the important details like hyperparameters (batch size, learning rate, etc.), metrics, and results. This made it super easy to reproduce experiments because everything was already saved in one place. If we wanted to rerun something, we could just check W&B for the exact settings and hyperparameters we used. The visualizations in W&B helped us track how training and validation losses changed over time, so we could compare different runs and figure out which ones worked best. Even though we did noy use config files, W&B was a really handy tool for keeping our experiments organized and making sure everything was consistent and easy to replicate.
 
 ### Question 14
 
@@ -348,7 +354,21 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 >
 > Answer:
 
---- question 14 fill here ---
+```markdown
+![my_image](../figures/wandb.png)
+```
+We tracked a few key metrics during our experiments:
+1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
+2. Train Accuracy: This measures how well the model performs on the training data. It helps us understand if the model is learning the patterns in the dataset.
+3. Epoch: Tracking the number of epochs is useful to ensure we are consistently comparing runs and evaluating progress over time.
+4. Train Loss: This tracks how far off the model’s predictions are during training. A steady decrease in loss indicates that the model is learning and improving.
+
+That said, we did not focus too much on optimizing the model itself. Our main goal was to have a functional model that we could work with. This is reflected in the figures, where the results are not perfect but were sufficient for our purposes.
+
+```markdown
+![my_image](figures/sweep_100.png)
+```
+We used W&B’s built-in hyperparameter sweeping functionality to optimize our model. By creating a sweep.yaml file and running the commands wandb sweep and wandb agent, we tested different hyperparameter combinations. The results were logged in the W&B dashboard, where we could analyze which hyperparameters worked best and which had the most significant impact. However, we did not focus too much on perfecting the model.
 
 ### Question 15
 
@@ -379,9 +399,11 @@ This GitHub Actions workflow is set up to run tests, linting, and coverage check
 > Answer:
 By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
 
+
 [This image](figures/profiler_tensorboard.png)
 
 The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded.
+
 
 ## Working in the cloud
 
@@ -398,7 +420,11 @@ The visualization of the tensorboard can provide a clear insight into the change
 >
 > Answer:
 
---- question 17 fill here ---
+On the Google Cloud Platform, we used Cloud Storage Bucket, Artifact Registry, Compute Engine and Cloud Run services and needed to set up some service accounts and other permissions inside the Identity and Access Management (IAM) page.
+The Bucket is used as the storage, where we store datasets, models and other necessary files. It allows us to access and manage this data within our project.
+Compute Engine is used for deploying and running applications, executing workflows and performing computational tasks. It provides the necessary flexibility and scalability needed for processing data and running our code efficiently.
+The Artifact Registry is where our repository is placed. It is the center for managing and storing container images and artifacts. This ensures integration between our services and supports the continuous deployment of our applications.
+The Cloud Run is providing a workflow to create a function. One function for example can be to input some data and get the prediction out of the provided model.
 
 ### Question 18
 
@@ -541,7 +567,7 @@ The visualization of the tensorboard can provide a clear insight into the change
 >
 > Answer:
 
-So far we have used 6.67$. The service costing the most was Compute Engine. 
+As of now, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, we find working in the cloud convenient. One of the big advantages is being able to store data in the cloud, saving space on our computers. It is flexible, easy to scale, and makes collaboration much smoother. 
 
 ### Question 28
 
@@ -559,9 +585,10 @@ So far we have used 6.67$. The service costing the most was Compute Engine.
 
 We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
 
-[this figure](figures/Distributed_Data_Loading.png)
-
 Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+
+We did not implemented anything extra.
+
 
 ### Question 29
 
@@ -581,8 +608,10 @@ Due to the size of the dataset, it requires few time for the CPU to load everyth
 ```markdown
 ![my_image](figures/overview.png)
 ```
-Our diagram starts in the data soruce point. The data is versionized via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versionized with Git Hub. It is also used for some experiments for logging some important metrcis with weights & biases. We also monitor our model by looking at the Data Drift.
-When new code gets pushed to the main branch in the Git some actions are starting and also a Trigger is being activated that builds two Docker Images.
+The general workflow of our MLOPs pipeline is displayed in the overview figure.
+Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement.
+When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds two Docker Images. One for the data and one for the application to run the whole model.
+For using our pipeline it is enough to clone the code from Git, pull the data from DVC and pull the docker images in order to get started locally.
 
 ### Question 30
 
@@ -597,9 +626,7 @@ When new code gets pushed to the main branch in the Git some actions are startin
 > Answer:
 
 Throughout the project, we ran into a few challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort.
-
 We also had some struggles with Git. With five people collaborating, we ran into issues with git pull and push commands, which often led to merge conflicts. Resolving those took a fair bit of coordination and troubleshooting.
-
 On top of that, working as a large group on different parts of the project wasn’t always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
 
 ### Question 31
@@ -618,7 +645,6 @@ On top of that, working as a large group on different parts of the project wasn�
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
-The total contribution tracked by the report is not representing our contributions to the project, because we needed to set up a new repository and therefore our previous commits-log got lost.
-In some cases people worked as a team on solutions and therefore not all contributions to the project can be represented in the distribution for the most commits.
-In general we worked sometimes together on a problem and sometimes splitted tasks, but each group member contributed equally to the project.
+The total contributions reflected in the overall project report for all groups do not fully represent our involvement in the project. This discrepancy occurred because we had to set up a new repository, resulting in the loss of our previous commit history. Additionally, many solutions were developed in teams, meaning that some tasks were divided whilst other times it was done in teams and therefore not all contributions are accurately captured in the commit distribution.
+However, each group member contributed equally to the overall success of the project.
 We used ChatGPT and GitHub CoPilot for writing some code, helping debugging and explaining some questions.

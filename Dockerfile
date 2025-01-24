@@ -1,16 +1,26 @@
-FROM ubuntu:latest
-LABEL authors="laolao"
+# Base image
+FROM python:3.11-slim AS base
+
+RUN apt update && \
+    apt install --no-install-recommends -y build-essential gcc && \
+    apt clean && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip before installation
+RUN python -m pip install --upgrade pip
+
+COPY src src/
+COPY requirements.txt requirements.txt
+COPY requirements_dev.txt requirements_dev.txt
+COPY README.md README.md
+COPY pyproject.toml pyproject.toml
+
+# set working dicrectory
+WORKDIR /
+
+#Use cache in case there're large packages
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
+RUN pip install . --no-deps --no-cache-dir --verbose
 
 
-ENTRYPOINT ["top", "-b"]
 
-FROM python:3.12.4-slim
-WORKDIR /code
-
-COPY ./requirements.txt /code/requirements.txt
-RUN pip install --no-cache-dir -r /code/requirements.txt
-
-COPY ./src /code/src
-
-EXPOSE 80
-CMD ["uvicorn", "src.group40_leaf.api:app", "--host", "0.0.0.0", "--port", "80"]
+ENTRYPOINT ["python", "-u", "src/group40_leaf/train.py"]
