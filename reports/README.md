@@ -85,7 +85,7 @@ will check the repositories and the code to verify your answers.
 * [X] Create a trigger workflow for automatically building your docker images (M21)
 * [X] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [X] Create a FastAPI application that can do inference using your model (M22)
-* [X] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [X] Write API tests for your application and setup continues integration for these (M24)
 * [X] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
@@ -94,11 +94,11 @@ will check the repositories and the code to verify your answers.
 ### Week 3
 
 * [X] Check how robust your model is towards data drifting (M27)
-* [X] Deploy to the cloud a drift detection API (M27)
+* [ ] Deploy to the cloud a drift detection API (M27)
 * [ ] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
 * [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
-* [ ] If applicable, optimize the performance of your data loading using distributed data loading (M29)
+* [X] If applicable, optimize the performance of your data loading using distributed data loading (M29)
 * [ ] If applicable, optimize the performance of your training pipeline by using distributed training (M30)
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
 
@@ -177,7 +177,7 @@ Once the virtual environment is created, it needs to be activated.
 4.	Installing Dependencies:
 With the virtual environment activated, the member installs all the dependencies listed in the requirements.txt file by running the command:
 pip install -r requirements.txt
-5.	Running the Project
+5.	Running the project!
 
 
 ### Question 5
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 >
 > Answer:
 
-For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
+For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases (W&B) experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
 
 ### Question 6
 
@@ -228,7 +228,14 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
+
+We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
+Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
+Test model: Tests 
+Integrationtests to test API: Test if the API is responding and present right informations.
+Performance test with loctusfile: 
 We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performancetest where ... is being tested.
+
 
 ### Question 8
 
@@ -243,8 +250,8 @@ We have implemented 4 tests. For the model we test that the outputs have the rig
 >
 > Answer:
 
-The code coverage of the data and model source code is 100% for both.
-Even though the coverage says that we have 100% we would not trust our code to be error free. The coverage looks for how much of the code is being executed during testing. Therefore, the test is only covering some scenarios/cases and not all the possibilities that can happen.
+The code coverage of the data and model source code is 100% for both tests.
+Even though the coverage says that we have 100% we would not trust our code to be error free. The coverage looks for how much of the code is being executed at least once during testing. Therefore, the test is only covering some scenarios/cases and not all the possibilities and edge cases that can happen. It is also not validating the logic behind our code or the overall correct performance and interaction of several components as one system. Also, not all possible error conditions can be tested. 
 
 ### Question 9
 
@@ -259,7 +266,7 @@ Even though the coverage says that we have 100% we would not trust our code to b
 >
 > Answer:
 
-In our project we worked with branches and pull requests. All team members had a separate branch. To save our changes we could first push the code on our branch. After implementing code that everyone should use, we made a pull request (PR). With that PR the code got merged into the main branch.
+In our project we worked with branches and pull requests. All team members had a separate branch. To save our changes we could first push the code on our branch. After implementing code that everyone should use, we made a pull request (PR). The PR should be reviewed and approved by at least two team members before it is merged into the main branch.
 Version control can be improved by that because if something goes wrong it is easier to go back to a specific point where everything worked. Maybe the version of the code from two days ago was more efficient and better working than the one recently deployed.
 
 ### Question 10
@@ -293,10 +300,13 @@ In general, it is good practice to keep track of the data versions when defining
 >
 > Answer:
 
-Our GitHub Actions workflow is set up to run unittests, linting, and coverage checks on multiple operating systems (Linux, MacOS, Windows) and Python versions (3.11, 3.12). It also makes use of caching to speed up the process.
-For running the integration test GitHub would need the model in the Repository. Our model was too big to provide it in the Repo and therefore the integrationtest is only run locally.
-When pushing code to a branch and then creating a pull request to the main the test are triggered and run, as seen here:
-<link>
+Our GitHub Actions workflow is used to ensure some standards within the project through a CI pipeline. For maintaining the code quality we run unit tests, linting checks and coverage reports.
+To trigger these workflows there can be two events: A push to the main branch or a pull request for the main branch. Therefore, all pushes are tested and validated before being merged into the main branch.
+All tests are implemented for multiple operating systems (Linux, MacOS, Windows). We are also testing two different Python versions (3.11, 3.12). With that we have several tests with all combinations of operating systems and python versions ensuring the compatibility in different environments.
+While performing the test we also make sure to use caching to speed up the pipeline. With this the dependencies are not being downloaded every time.
+For running the integration test within the workflow GitHub would need access to the model in the Repository. However, our model is too large to provide it in the Repo due to size limitations. We therefore run the integrationtest only locally.
+When pushing code to a branch and then creating a pull request to the main the tests are triggered and run, as seen here:
+ https://github.com/wen2720/group40_dtumlops/actions/runs/12945845760
 
 ## Running code and tracking experiments
 
@@ -347,20 +357,18 @@ We used W&B to make sure no information was lost and our experiments were reprod
 >
 > Answer:
 
-```markdown
 ![my_image](figures/wandb.png)
-```
+
 We tracked a few key metrics during our experiments:
-1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
+1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that is too high can cause instability, while one that is too low can make training inefficient.
 2. Train Accuracy: This measures how well the model performs on the training data. It helps us understand if the model is learning the patterns in the dataset.
 3. Epoch: Tracking the number of epochs is useful to ensure we are consistently comparing runs and evaluating progress over time.
 4. Train Loss: This tracks how far off the model’s predictions are during training. A steady decrease in loss indicates that the model is learning and improving.
 
 That said, we did not focus too much on optimizing the model itself. Our main goal was to have a functional model that we could work with. This is reflected in the figures, where the results are not perfect but were sufficient for our purposes.
 
-```markdown
 ![my_image](figures/sweep_100.png)
-```
+
 We used W&B’s built-in hyperparameter sweeping functionality to optimize our model. By creating a sweep.yaml file and running the commands wandb sweep and wandb agent, we tested different hyperparameter combinations. The results were logged in the W&B dashboard, where we could analyze which hyperparameters worked best and which had the most significant impact. However, we did not focus too much on perfecting the model.
 
 ### Question 15
@@ -402,10 +410,11 @@ The `--rm` stands for removing the container as soon as it exits. The `-v` optio
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+We haven't implemented a specific python library for the debugging but adpot the debugging of the Visual Studio Code to make sure the coding without any mistakes.
+By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall the time cost of the training is acceptable and we can see most of the work is done by the CPU Execution which can hardly improve by the code skills we reckon the code part is reach the requirements of this project.
 
-```markdown
 ![my_image](figures/profiling.png)
-```
 
 ## Working in the cloud
 
@@ -470,9 +479,7 @@ The compute engine is pre-configured and the specification is as follows:
 >
 > Answer:
 
-```markdown
 ![my_image](figures/bucket.png)
-```
 
 ### Question 20
 
@@ -481,9 +488,7 @@ The compute engine is pre-configured and the specification is as follows:
 >
 > Answer:
 
-```markdown
 ![my_image](figures/registry.png)
-```
 
 ### Question 21
 
@@ -524,7 +529,9 @@ We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/
 >
 > Answer:
 
---- question 23 fill here ---
+We did manage to write an API for our model. We used FastAPI to build the API and structured it to serve predictions for leaf classification. The API has two endpoints: a root endpoint (/) that provides a welcome message and a /predict endpoint for inference. The /predict endpoint accepts an image file as input, processes it using the Pillow library to ensure it is in grayscale format, and then applies a predefined transformation pipeline (resize and tensor conversion) using torchvision.transforms.
+The pre-trained model is loaded using Python's pickle library and is moved to the appropriate device. The prediction process involves passing the transformed input to the model and extracting the class index with the highest probability.
+We added input validation to ensure compatibility by converting non-grayscale images and ensured the model was set to evaluation mode (model.eval()). The API is lightweight, scalable, and easy to extend for additional endpoints if needed.
 
 ### Question 24
 
@@ -540,7 +547,8 @@ We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/
 >
 > Answer:
 
---- question 24 fill here ---
+For deployment, we wrapped our model into an application using FastAPI and served it locally. The deployment involved loading the trained model, defining preprocessing pipelines with torchvision.transforms, and creating endpoints for inference. The service can be invoked locally by running the command uvicorn --reload --port 8000 api:app and accessing the endpoints, such as /predict, which accepts image files for classification.
+Although we attempted to deploy the API to the cloud, the process was unsuccessful due to time constraints and technical challenges, such as configuring cloud environments and managing dependencies. For now, the service is functional locally.
 
 ### Question 25
 
@@ -555,7 +563,8 @@ We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/
 >
 > Answer:
 
---- question 25 fill here ---
+For our application, we have indeed performed unit testing. The unit tests are written using Pytest to confirm that critical functionalities—such as model forwarding (checking output shape matches expected class counts) and dataset integrity (e.g., verifying all labels are present and DataLoader outputs the correct batch shape)—are working as intended. 
+The result of testing showed that 100% coverage of model.py and partial coverage of data.py. 
 
 ### Question 26
 
@@ -589,7 +598,7 @@ We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/
 >
 > Answer:
 
-As of now, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, we find working in the cloud convenient. One of the big advantages is being able to store data in the cloud, saving space on our computers. It is flexible, easy to scale, and makes collaboration much smoother. 
+So far, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, working in the cloud has been pretty convenient - it is flexible, easy to scale, and makes collaboration a lot smoother. That said, we did run into a few challenges along the way. When we were testing our model with a function in GCP under Cloud Run, we had some trouble with port configuration and storage, which made things more complicated than we expected. On top of that, dealing with accounts, permissions, and access settings was a bit of a headache and caused some confusion. Still, once we got past those issues, the cloud proved to be a really handy tool for the project.
 
 ### Question 28
 
@@ -605,7 +614,13 @@ As of now, we have spent $6.67, with the biggest cost coming from Compute Engine
 >
 > Answer:
 
-We did not implemented anything extra.
+We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
+
+![my_image](figures/Distributed_Data_Loading.png)
+
+Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+
+To prevent future changes in data distribution from affecting the performance of machine learning models and causing the model's prediction effect to decline, we try to implement evidently to monitor the data drift and generate a report about it however due to the difference of the data type, the data drift of images data is hard to be detected due to the quantity of the feature is too massive, due to the time limitation we failed to get the result, without the corresponding report we can hardly do the further analysis.
 
 ### Question 29
 
@@ -622,13 +637,12 @@ We did not implemented anything extra.
 >
 > Answer:
 
-```markdown
 ![my_image](figures/overview.png)
-```
+
 The general workflow of our MLOPs pipeline is displayed in the overview figure.
-Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement.
-When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds two Docker Images. One for the data and one for the application to run the whole model.
-For using our pipeline it is enough to clone the code from Git, pull the data from DVC and pull the docker images in order to get started locally.
+Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement in the future.
+When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds a Docker Image called leaf:latest.
+For using our pipeline, it is enough to clone the code from Git, pull the data from DVC and pull the docker images in order to get started locally.
 
 ### Question 30
 
@@ -642,9 +656,9 @@ For using our pipeline it is enough to clone the code from Git, pull the data fr
 >
 > Answer:
 
-Throughout the project, we ran into a few challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort.
+Throughout the project, we ran into many challenges. One of the bigger ones was dealing with the different operating systems in our team: Windows, Linux, and macOS. Making sure the code worked properly across all platforms took extra time and effort, however we made it work.
 We also had some struggles with Git. With five people collaborating, we ran into issues with git pull and push commands, which often led to merge conflicts. Resolving those took a fair bit of coordination and troubleshooting.
-On top of that, working as a large group on different parts of the project wasn’t always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
+On top of that, working as a large group on different parts of the project was not always easy. Putting together the pieces everyone worked on separately was tricky at times. Making sure all the parts fit together and worked as expected required a lot of debugging and testing.
 
 ### Question 31
 
