@@ -228,7 +228,14 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
+
+We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
+Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
+Test model: Tests 
+Integrationtests to test API: Test if the API is responding and present right informations.
+Performance test with loctusfile: 
 We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performancetest where ... is being tested.
+
 
 ### Question 8
 
@@ -388,8 +395,15 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
+
+
+[This image](figures/profiler_tensorboard.png)
+
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded.
 
 ![my_image](figures/profiling.png)
+
 
 ## Working in the cloud
 
@@ -565,7 +579,12 @@ As of now, we have spent $6.67, with the biggest cost coming from Compute Engine
 >
 > Answer:
 
+We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
+
+Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+
 We did not implemented anything extra.
+
 
 ### Question 29
 
