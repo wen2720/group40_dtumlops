@@ -315,7 +315,7 @@ When pushing code to a branch and then creating a pull request to the main the t
 >
 > Answer:
   
-We did not make use of config files. Bla bla... 
+We did not use config files for our experiments. Instead, we defined the necessary parameters directly within the training function by setting default values for things like batch size, learning rate, and number of epochs. We are aware that config files are a great way to organize and manage experiment settings, especially for larger projects. However, in our case, we did not prioritize the time to set them up. 
 
 ### Question 13
 
@@ -330,7 +330,7 @@ We did not make use of config files. Bla bla...
 >
 > Answer:
 
-We used W&B to make sure no information was lost and our experiments were reproducible. Every time we ran an experiment, W&B automatically logged all the important details like hyperparameters (batch size, learning rate, etc.), metrics, and results. This made it super easy to reproduce experiments because everything was already saved in one place. If we wanted to rerun something, we could just check W&B for the exact settings and hyperparameters we used. Plus, the visualizations in W&B helped us track how training and validation losses changed over time, so we could compare different runs and figure out which ones worked best. Even though we did noy use config files, W&B was a really handy tool for keeping our experiments organized and making sure everything was consistent and easy to replicate.
+We used W&B to make sure no information was lost and our experiments were reproducible. Every time we ran an experiment, W&B automatically logged all the important details like hyperparameters (batch size, learning rate, etc.), metrics, and results. This made it super easy to reproduce experiments because everything was already saved in one place. If we wanted to rerun something, we could just check W&B for the exact settings and hyperparameters we used. The visualizations in W&B helped us track how training and validation losses changed over time, so we could compare different runs and figure out which ones worked best. Even though we did noy use config files, W&B was a really handy tool for keeping our experiments organized and making sure everything was consistent and easy to replicate.
 
 ### Question 14
 
@@ -553,7 +553,7 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 >
 > Answer:
 
-So far we have used 6.67$. The service costing the most was Compute Engine. 
+As of now, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, we find working in the cloud convenient. One of the big advantages is being able to store data in the cloud, saving space on our computers. It is flexible, easy to scale, and makes collaboration much smoother. 
 
 ### Question 28
 
