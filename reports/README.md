@@ -512,7 +512,7 @@ The compute engine is pre-configured and the specification is as follows:
 >
 > Answer:
 
-We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/torchvision.models.convnext_tiny.html) in the GCP Compute engine instance. We download the dataset from the google storage bucket and sotre the model parameters in the instance. Thanks to the pre-configured instance which already have the enviornment ready e.g., `python`, `venv`, `docker` and etc. We can efficiently pull the docker image, for the training and evaluation.
+We trained the [convnext_tiny](https://pytorch.org/vision/main/models/generated/torchvision.models.convnext_tiny.html) in the GCP Compute engine instance. We download the dataset from the google storage bucket and store the model parameters in the instance. Thanks to the pre-configured instance which already have the environment ready, e.g., `python`, `venv`, `docker` etc. We can efficiently pull the docker image for the training and evaluation.
 
 ## Deployment
 
