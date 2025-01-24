@@ -348,7 +348,7 @@ We used W&B to make sure no information was lost and our experiments were reprod
 > Answer:
 
 ```markdown
-![my_image](..figures/wandb.png)
+![my_image](../figures/wandb.png)
 ```
 We tracked a few key metrics during our experiments:
 1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
