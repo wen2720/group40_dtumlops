@@ -578,8 +578,7 @@ The result of testing showed that 100% coverage of model.py and partial coverage
 > *measure ... and ... that would inform us about this ... behaviour of our application.*
 >
 > Answer:
-
---- question 26 fill here ---
+We did not manage to implement monitoring for our deployed model. we would like to track metrics such as request latency, throughput, and error rates, which would allow us to identify bottlenecks or performance degradation early.Additionally,Tools like Prometheus and Grafana could be used for real-time metric collection and visualization, while monitoring libraries like OpenTelemetry could help us trace API requests end-to-end.
 
 ## Overall discussion of project
 
