@@ -413,7 +413,7 @@ The `--rm` stands for removing the container as soon as it exits. The `-v` optio
 
 We haven't implemented a specific python library for the debugging but adopt the debugging of the Visual Studio Code to make sure the coding is without any mistakes.
 By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
-The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall the time cost of the training is acceptable and we can see most of the work is done by the CPU Execution which can hardly improve by the code skills we reckon the code part is reach the requirements of this project.
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall, the time cost of the training is acceptable, and we can see that most of the work is done by the CPU execution, which can hardly be improved by code optimization. We believe the code meets the requirements of this project.
 
 ![my_image](figures/profiling.png)
 
@@ -433,9 +433,12 @@ The visualization of the tensorboard can provide a clear insight into the change
 > Answer:
 
 On the Google Cloud Platform, we used Cloud Storage Bucket, Artifact Registry, Compute Engine and Cloud Run services and needed to set up some service accounts and other permissions inside the Identity and Access Management (IAM) page.
+
 The Bucket is used as the storage, where we store datasets, models and other necessary files. It allows us to access and manage this data within our project.
 Compute Engine is used for deploying and running applications, executing workflows and performing computational tasks. It provides the necessary flexibility and scalability needed for processing data and running our code efficiently.
+
 The Artifact Registry is where our repository is placed. It is the center for managing and storing container images and artifacts. This ensures integration between our services and supports the continuous deployment of our applications.
+
 The Cloud Run is providing a workflow to create a function. One function for example can be to input some data and get the prediction out of the provided model.
 
 ### Question 18
