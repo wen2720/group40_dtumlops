@@ -177,7 +177,7 @@ Once the virtual environment is created, it needs to be activated.
 4.	Installing Dependencies:
 With the virtual environment activated, the member installs all the dependencies listed in the requirements.txt file by running the command:
 pip install -r requirements.txt
-5.	Running the Project
+5.	Running the project!
 
 
 ### Question 5
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 >
 > Answer:
 
-For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
+For our project we used the cookiecutter template and mostly the provided structure within the template. For running weight&biases (W&B) experiments we added the wandb-folder that contains the files for all our runs and sweeps. Along with setting up and using dvc we also have a .dvc-folder with some additional files. For the cloudbuild we have a file called cloudbuild.yaml. In the tests folder we have an additional folder called integrationtest for testing our API and in the root of our project a required requirements_test.txt file was added. We deviated from the template in the data folder as we did not have raw and preprocessed data, but a folder containing all images as well as two .csv-files for additional information for the ground truth.
 
 ### Question 6
 
@@ -259,7 +259,7 @@ Even though the coverage says that we have 100% we would not trust our code to b
 >
 > Answer:
 
-In our project we worked with branches and pull requests. All team members had a separate branch. To save our changes we could first push the code on our branch. After implementing code that everyone should use, we made a pull request (PR). With that PR the code got merged into the main branch.
+In our project we worked with branches and pull requests. All team members had a separate branch. To save our changes we could first push the code on our branch. After implementing code that everyone should use, we made a pull request (PR). The PR should be reviewed and approved by at least two team members before it is merged into the main branch.
 Version control can be improved by that because if something goes wrong it is easier to go back to a specific point where everything worked. Maybe the version of the code from two days ago was more efficient and better working than the one recently deployed.
 
 ### Question 10
@@ -348,7 +348,7 @@ We used W&B to make sure no information was lost and our experiments were reprod
 > Answer:
 
 ```markdown
-![my_image](figures/wandb.png)
+![my_image](..figures/wandb.png)
 ```
 We tracked a few key metrics during our experiments:
 1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
