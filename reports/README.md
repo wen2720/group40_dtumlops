@@ -398,15 +398,11 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+We haven't implemented a specific python library for the debugging but adpot the debugging of the Visual Studio Code to make sure the coding without any mistakes.
 By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
-
-
-[This image](figures/profiler_tensorboard.png)
-
-The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded.
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall the time cost of the training is acceptable and we can see most of the work is done by the CPU Execution which can hardly improve by the code skills we reckon the code part is reach the requirements of this project.
 
 ![my_image](figures/profiling.png)
-
 
 ## Working in the cloud
 
@@ -501,7 +497,9 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 23 fill here ---
+We did manage to write an API for our model. We used FastAPI to build the API and structured it to serve predictions for leaf classification. The API has two endpoints: a root endpoint (/) that provides a welcome message and a /predict endpoint for inference. The /predict endpoint accepts an image file as input, processes it using the Pillow library to ensure it is in grayscale format, and then applies a predefined transformation pipeline (resize and tensor conversion) using torchvision.transforms.
+The pre-trained model is loaded using Python's pickle library and is moved to the appropriate device. The prediction process involves passing the transformed input to the model and extracting the class index with the highest probability.
+We added input validation to ensure compatibility by converting non-grayscale images and ensured the model was set to evaluation mode (model.eval()). The API is lightweight, scalable, and easy to extend for additional endpoints if needed.
 
 ### Question 24
 
@@ -517,7 +515,8 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 24 fill here ---
+For deployment, we wrapped our model into an application using FastAPI and served it locally. The deployment involved loading the trained model, defining preprocessing pipelines with torchvision.transforms, and creating endpoints for inference. The service can be invoked locally by running the command uvicorn --reload --port 8000 api:app and accessing the endpoints, such as /predict, which accepts image files for classification.
+Although we attempted to deploy the API to the cloud, the process was unsuccessful due to time constraints and technical challenges, such as configuring cloud environments and managing dependencies. For now, the service is functional locally.
 
 ### Question 25
 
@@ -532,7 +531,8 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 25 fill here ---
+For our application, we have indeed performed unit testing. The unit tests are written using Pytest to confirm that critical functionalities—such as model forwarding (checking output shape matches expected class counts) and dataset integrity (e.g., verifying all labels are present and DataLoader outputs the correct batch shape)—are working as intended. 
+The result of testing showed that 100% coverage of model.py and partial coverage of data.py. 
 
 ### Question 26
 
@@ -566,7 +566,7 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
-As of now, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, we find working in the cloud convenient. One of the big advantages is being able to store data in the cloud, saving space on our computers. It is flexible, easy to scale, and makes collaboration much smoother. 
+So far, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, working in the cloud has been pretty convenient - it is flexible, easy to scale, and makes collaboration a lot smoother. That said, we did run into a few challenges along the way. When we were testing our model with a function in GCP under Cloud Run, we had some trouble with port configuration and storage, which made things more complicated than we expected. On top of that, dealing with accounts, permissions, and access settings was a bit of a headache and caused some confusion. Still, once we got past those issues, the cloud proved to be a really handy tool for the project.
 
 ### Question 28
 
@@ -584,7 +584,11 @@ As of now, we have spent $6.67, with the biggest cost coming from Compute Engine
 
 We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
 
+![my_image](figures/Distributed_Data_Loading.png)
+
 Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+
+To prevent future changes in data distribution from affecting the performance of machine learning models and causing the model's prediction effect to decline, we try to implement evidently to monitor the data drift and generate a report about it however due to the difference of the data type, the data drift of images data is hard to be detected due to the quantity of the feature is too massive, due to the time limitation we failed to get the result, without the corresponding report we can hardly do the further analysis.
 
 ### Question 29
 
