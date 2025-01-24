@@ -250,8 +250,8 @@ We have implemented 4 tests. For the model we test that the outputs have the rig
 >
 > Answer:
 
-The code coverage of the data and model source code is 100% for both.
-Even though the coverage says that we have 100% we would not trust our code to be error free. The coverage looks for how much of the code is being executed during testing. Therefore, the test is only covering some scenarios/cases and not all the possibilities that can happen.
+The code coverage of the data and model source code is 100% for both tests.
+Even though the coverage says that we have 100% we would not trust our code to be error free. The coverage looks for how much of the code is being executed at least once during testing. Therefore, the test is only covering some scenarios/cases and not all the possibilities and edge cases that can happen. It is also not validating the logic behind our code or the overall correct performance and interaction of several components as one system. Also, not all possible error conditions can be tested. 
 
 ### Question 9
 
@@ -590,9 +590,6 @@ Due to the size of the dataset, it requires few time for the CPU to load everyth
 
 To prevent future changes in data distribution from affecting the performance of machine learning models and causing the model's prediction effect to decline, we try to implement evidently to monitor the data drift and generate a report about it however due to the difference of the data type, the data drift of images data is hard to be detected due to the quantity of the feature is too massive, due to the time limitation we failed to get the result, without the corresponding report we can hardly do the further analysis.
 
-We did not implemented anything extra.
-
-
 ### Question 29
 
 > **Include a figure that describes the overall architecture of your system and what services that you make use of.**
@@ -611,9 +608,9 @@ We did not implemented anything extra.
 ![my_image](figures/overview.png)
 
 The general workflow of our MLOPs pipeline is displayed in the overview figure.
-Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement.
-When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds two Docker Images. One for the data and one for the application to run the whole model.
-For using our pipeline it is enough to clone the code from Git, pull the data from DVC and pull the docker images in order to get started locally.
+Our diagram starts in the data source point. The data (containing two csv-files and a lot of images) is versioned via DVC and sent to a Google Cloud Platform Storage Bucket. We also use the data for training the model. The model is also versioned with Git Hub. It is also used for experiments for logging some important metrics with weights & biases. There is an option to sweep over several parameters or run the experiments with different parameters. We also tried to monitor our model by looking at the Data Drift, but as it was more complex to use images the monitoring is an additional feature that would be helpful to implement in the future.
+When a new code gets pushed (after adding and committing) to the main branch on GitHub some actions start. Our actions are testing out different python versions on different operating systems. With a push there will also be a Trigger activated that builds a Docker Image called leaf:latest.
+For using our pipeline, it is enough to clone the code from Git, pull the data from DVC and pull the docker images in order to get started locally.
 
 ### Question 30
 
