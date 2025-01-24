@@ -61,4 +61,7 @@ jobs:
       - name: Configure Docker for GCP
         run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
+      - name: Build Docker Image
+        run: gcloud builds submit --config=cloudbuild.yaml .
+
 
