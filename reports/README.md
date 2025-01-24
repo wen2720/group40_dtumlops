@@ -501,7 +501,9 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 23 fill here ---
+We did manage to write an API for our model. We used FastAPI to build the API and structured it to serve predictions for leaf classification. The API has two endpoints: a root endpoint (/) that provides a welcome message and a /predict endpoint for inference. The /predict endpoint accepts an image file as input, processes it using the Pillow library to ensure it is in grayscale format, and then applies a predefined transformation pipeline (resize and tensor conversion) using torchvision.transforms.
+The pre-trained model is loaded using Python's pickle library and is moved to the appropriate device. The prediction process involves passing the transformed input to the model and extracting the class index with the highest probability.
+We added input validation to ensure compatibility by converting non-grayscale images and ensured the model was set to evaluation mode (model.eval()). The API is lightweight, scalable, and easy to extend for additional endpoints if needed.
 
 ### Question 24
 
@@ -517,7 +519,8 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 24 fill here ---
+For deployment, we wrapped our model into an application using FastAPI and served it locally. The deployment involved loading the trained model, defining preprocessing pipelines with torchvision.transforms, and creating endpoints for inference. The service can be invoked locally by running the command uvicorn --reload --port 8000 api:app and accessing the endpoints, such as /predict, which accepts image files for classification.
+Although we attempted to deploy the API to the cloud, the process was unsuccessful due to time constraints and technical challenges, such as configuring cloud environments and managing dependencies. For now, the service is functional locally.
 
 ### Question 25
 
@@ -532,7 +535,8 @@ The Cloud Run is providing a workflow to create a function. One function for exa
 >
 > Answer:
 
---- question 25 fill here ---
+For our application, we have indeed performed unit testing. The unit tests are written using Pytest to confirm that critical functionalities—such as model forwarding (checking output shape matches expected class counts) and dataset integrity (e.g., verifying all labels are present and DataLoader outputs the correct batch shape)—are working as intended. 
+The result of testing showed that 100% coverage of model.py and partial coverage of data.py. 
 
 ### Question 26
 
