@@ -398,12 +398,9 @@ We used W&B’s built-in hyperparameter sweeping functionality to optimize our m
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+We haven't implemented a specific python library for the debugging but adpot the debugging of the Visual Studio Code to make sure the coding without any mistakes.
 By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
-
-
-[This image](figures/profiler_tensorboard.png)
-
-The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded.
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall the time cost of the training is acceptable and we can see most of the work is done by the CPU Execution which can hardly improve by the code skills we reckon the code part is reach the requirements of this project.
 
 ![my_image](figures/profiling.png)
 
@@ -587,7 +584,11 @@ So far, we have spent $6.67, with the biggest cost coming from Compute Engine. O
 
 We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
 
+![my_image](figures/Distributed_Data_Loading.png)
+
 Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+
+To prevent future changes in data distribution from affecting the performance of machine learning models and causing the model's prediction effect to decline, we try to implement evidently to monitor the data drift and generate a report about it however due to the difference of the data type, the data drift of images data is hard to be detected due to the quantity of the feature is too massive, due to the time limitation we failed to get the result, without the corresponding report we can hardly do the further analysis.
 
 We did not implemented anything extra.
 
