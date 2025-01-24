@@ -348,8 +348,9 @@ We used W&B to make sure no information was lost and our experiments were reprod
 > Answer:
 
 ```markdown
-![my_image](../figures/wandb.png)
+![my_image](figures/wandb.png)
 ```
+
 We tracked a few key metrics during our experiments:
 1. Learning Rate: This shows how quickly the model updates its weights during training. It is an important metric because a learning rate that’s too high can cause instability, while one that’s too low can make training inefficient.
 2. Train Accuracy: This measures how well the model performs on the training data. It helps us understand if the model is learning the patterns in the dataset.
@@ -361,6 +362,7 @@ That said, we did not focus too much on optimizing the model itself. Our main go
 ```markdown
 ![my_image](figures/sweep_100.png)
 ```
+
 We used W&B’s built-in hyperparameter sweeping functionality to optimize our model. By creating a sweep.yaml file and running the commands wandb sweep and wandb agent, we tested different hyperparameter combinations. The results were logged in the W&B dashboard, where we could analyze which hyperparameters worked best and which had the most significant impact. However, we did not focus too much on perfecting the model.
 
 ### Question 15
