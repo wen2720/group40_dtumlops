@@ -407,7 +407,6 @@ The visualization of the tensorboard can provide a clear insight into the change
 
 ![my_image](figures/profiling.png)
 
-
 ## Working in the cloud
 
 > In the following section we would like to know more about your experience when developing in the cloud.
@@ -570,7 +569,7 @@ The result of testing showed that 100% coverage of model.py and partial coverage
 >
 > Answer:
 
-As of now, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, we find working in the cloud convenient. One of the big advantages is being able to store data in the cloud, saving space on our computers. It is flexible, easy to scale, and makes collaboration much smoother. 
+So far, we have spent $6.67, with the biggest cost coming from Compute Engine. Overall, working in the cloud has been pretty convenient - it is flexible, easy to scale, and makes collaboration a lot smoother. That said, we did run into a few challenges along the way. When we were testing our model with a function in GCP under Cloud Run, we had some trouble with port configuration and storage, which made things more complicated than we expected. On top of that, dealing with accounts, permissions, and access settings was a bit of a headache and caused some confusion. Still, once we got past those issues, the cloud proved to be a really handy tool for the project.
 
 ### Question 28
 
