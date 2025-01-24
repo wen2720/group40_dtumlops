@@ -408,9 +408,10 @@ The `--rm` stands for removing the container as soon as it exits. The `-v` optio
 > *run of our main code at some point that showed ...*
 >
 > Answer:
-We haven't implemented a specific python library for the debugging but adpot the debugging of the Visual Studio Code to make sure the coding without any mistakes.
+
+We haven't implemented a specific python library for the debugging but adopt the debugging of the Visual Studio Code to make sure the coding is without any mistakes.
 By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
-The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall the time cost of the training is acceptable and we can see most of the work is done by the CPU Execution which can hardly improve by the code skills we reckon the code part is reach the requirements of this project.
+The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall, the time cost of the training is acceptable, and we can see that most of the work is done by the CPU execution, which can hardly be improved by code optimization. We believe the code meets the requirements of this project.
 
 ![my_image](figures/profiling.png)
 
@@ -430,9 +431,12 @@ The visualization of the tensorboard can provide a clear insight into the change
 > Answer:
 
 On the Google Cloud Platform, we used Cloud Storage Bucket, Artifact Registry, Compute Engine and Cloud Run services and needed to set up some service accounts and other permissions inside the Identity and Access Management (IAM) page.
+
 The Bucket is used as the storage, where we store datasets, models and other necessary files. It allows us to access and manage this data within our project.
 Compute Engine is used for deploying and running applications, executing workflows and performing computational tasks. It provides the necessary flexibility and scalability needed for processing data and running our code efficiently.
+
 The Artifact Registry is where our repository is placed. It is the center for managing and storing container images and artifacts. This ensures integration between our services and supports the continuous deployment of our applications.
+
 The Cloud Run is providing a workflow to create a function. One function for example can be to input some data and get the prediction out of the provided model.
 
 ### Question 18
@@ -576,6 +580,7 @@ The result of testing showed that 100% coverage of model.py and partial coverage
 > *measure ... and ... that would inform us about this ... behaviour of our application.*
 >
 > Answer:
+
 We did not manage to implement monitoring for our deployed model. we would like to track metrics such as request latency, throughput, and error rates, which would allow us to identify bottlenecks or performance degradation early.Additionally,Tools like Prometheus and Grafana could be used for real-time metric collection and visualization, while monitoring libraries like OpenTelemetry could help us trace API requests end-to-end.
 
 ## Overall discussion of project
@@ -611,13 +616,13 @@ So far, we have spent $6.67, with the biggest cost coming from Compute Engine. O
 >
 > Answer:
 
-We explored how time changes when the different woker number of the CPU is implemented in the distributed data loading and presented in 
+We explored how time changes with different CPU worker numbers in distributed data loading, as presented in:
 
 ![my_image](figures/Distributed_Data_Loading.png)
 
-Due to the size of the dataset, it requires few time for the CPU to load everything into the dataloder method therefore usually the time cost between the different worker numbers is less than 0.5s, however, the time cost changes rapidly from worker number is equal to 1 to worker number is equal to 2 and only slight waved when number increase after 2. In summary, distributed data loading can reduce the time cost in the data loading efficiently but it is more adopted in the massive datasets, for small datasets the implementation of the distributed data loading can only bring slight improvement at begining and keep stable after a specific number of workers. 
+Due to the size of the dataset, it requires a significant amount of time for the CPU to load everything into the dataloader method. Therefore, the time difference between different worker numbers is usually less than 0.5s. However, the time cost changes rapidly when the worker number increases from 1 to 2, and only shows slight variations as the number of workers increases beyond 2. In summary, distributed data loading can efficiently reduce time costs in data loading, but it is more beneficial for large datasets. For smaller datasets, the implementation of distributed data loading only provides a slight improvement initially and remains stable after a specific number of workers.
 
-To prevent future changes in data distribution from affecting the performance of machine learning models and causing the model's prediction effect to decline, we try to implement evidently to monitor the data drift and generate a report about it however due to the difference of the data type, the data drift of images data is hard to be detected due to the quantity of the feature is too massive, due to the time limitation we failed to get the result, without the corresponding report we can hardly do the further analysis.
+To prevent future changes in data distribution from affecting the performance of machine learning models and causing a decline in the model's prediction accuracy, we attempted to implement a clear system to monitor data drift and generate related reports. However, due to the differences in data types, detecting data drift in image data is challenging because of the massive number of features. Due to time limitations, we were unable to obtain meaningful results. Without the corresponding report, further analysis is difficult.
 
 ### Question 29
 
