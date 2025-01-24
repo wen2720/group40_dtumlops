@@ -411,7 +411,7 @@ The `--rm` stands for removing the container as soon as it exits. The `-v` optio
 >
 > Answer:
 
-We haven't implemented a specific python library for the debugging but adpot the debugging of the Visual Studio Code to make sure the coding without any mistakes.
+We haven't implemented a specific python library for the debugging but adopt the debugging of the Visual Studio Code to make sure the coding is without any mistakes.
 By embedding the pytorch profiler in train.py, we can analyze the time of each method during training.
 The visualization of the tensorboard can provide a clear insight into the change in the time consumed by each method in each step. We can observe that the training finished in 3 step and in each steps most of the time is spent on CPU Execution, which indicates the computation is CPU-bound. No time is spent on data loading, likely because the data is either preloaded. Overall the time cost of the training is acceptable and we can see most of the work is done by the CPU Execution which can hardly improve by the code skills we reckon the code part is reach the requirements of this project.
 
