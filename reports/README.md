@@ -228,13 +228,11 @@ We used flake8 for linting. We check for four error codes within our workflow (s
 >
 > Answer:
 
+We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performance test where load test is being tested and is implemented by the library locust in(5 users) 
 
-We have implemented 4 tests. For the model we test that the model outputs the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224).
-Test data: Testing correct number of samples, test if all 99 labels are present, test ouput shape of images with different batchsizes
-Test model: Tests 
-Integrationtests to test API: Test if the API is responding and present right informations.
-Performance test with loctusfile: 
-We have implemented 4 tests. For the model we test that the outputs have the right shape (1, num_classes) with a given input (batch_size, 1, 224, 224). The data test is being tested so that the training dataset has the correct number of samples, that all 99 labels are present and that the ouput shape of the images are correct with different batch sizes. For the integrationtest the API is being tests by looking for a correct respond. The last test is a performancetest where ... is being tested.
+![my_image](figures/Load_test.png)
+
+To ensure that the API works correctly in normal and under high load pressure.
 
 
 ### Question 8
