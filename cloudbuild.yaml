@@ -3,17 +3,19 @@ steps:
   id: 'Build container image'
   args: [
     'build',
-    '.',
-    '-t',
-    'europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/train',
     '-f',
-    'dockerfiles/train.dockerfile'
+    '/dockerfiles/train.dockerfile',
+    '-t',
+    '${_IMAGE_NAME}',
+    '.',
   ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Push container image'
   args: [
     'push',
-    'europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/train'
+    '${_IMAGE_NAME}'
   ]
 options:
   logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _IMAGE_NAME: 'europe-west1-docker.pkg.dev/dtumlops-447808/mlops-group40/leaf:latest'
